@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: produk-service
+  labels:
+    app: produk-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: produk-service
+  template:
+    metadata:
+      labels:
+        app: produk-service
+    spec:
+      containers:
+      - name: produk-service
+        image: hanifdinata/produk-service:1.0.2
+        ports:
+        - containerPort: 8081
+        env:
+        - name: spring.application.name
+          value: "produk-service"
+        - name: eureka.client.service-url.defaultZone
+          value: "http://eurekaserver:8761/eureka/"
+        - name: spring.datasource.url
+          value: "jdbc:mysql://mysql:3306/dbcommerce_produk?useSSL=false&serverTimezone=UTC"
+        - name: spring.datasource.username
+          value: "root"
+        - name: spring.datasource.password
+          value: "root_password"
+
+
+
+
